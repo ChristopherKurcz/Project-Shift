@@ -31,15 +31,6 @@ disabled = true
 
 [node name="Polygon2D" type="Polygon2D" parent="StaticBody2D3/CollisionPolygon2D"]
 
-[node name="StaticBody2D4" type="StaticBody2D" parent="."]
-visible = false
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D4"]
-polygon = PackedVector2Array(72, 128, 152, 168, 160, 168, 168, 168, 216, 120, 312, 176, 8, 176, 8, 128)
-disabled = true
-
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D4/CollisionPolygon2D"]
-
 [node name="StaticBody2D5" type="StaticBody2D" parent="."]
 collision_mask = 0
 

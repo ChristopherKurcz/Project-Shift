@@ -6,10 +6,10 @@ const ACCELERATION = 200
 const DEACCELERATION = 250
 const AIR_ACCELERATION = 150
 const AIR_DEACCELERATION = 75
-const GRAVITY = 220
-const JUMP_GRAVITY = 120 
+const GRAVITY = 200
+const JUMP_GRAVITY = 100 
 const MAX_FALL_SPEED = 650
-const JUMP_FORCE = 75 
+const JUMP_FORCE = 65 
 const WALL_JUMP_FORCE = 40
 const MAX_WALL_SLIDE_SPEED = 40
 const IMPACT_DEATH_SPEED = 180
@@ -22,10 +22,12 @@ var slide_collision = null
 var collision_angle = 0.0
 var prev_real_velocity = Vector2.ZERO
 var body_state = body_states.SOLID
-var was_on_floor
+var wall_sliding
 var falling
 var on_floor
+var was_on_floor
 var valid_wall_angle
+var in_soft_area = false
 # times
 var coyote_time = 0.1
 var jump_timer = 0.0
@@ -49,7 +51,8 @@ func process_input():
 	if Input.is_action_pressed("phase"):
 		body_state = body_states.PHASE
 	else:
-		body_state = body_states.SOLID
+		if not in_soft_area:
+			body_state = body_states.SOLID
 
 
 func _physics_process(delta):
@@ -76,6 +79,7 @@ func process_collisions():
 	
 	on_floor = true if FloorRaycast.is_colliding() else false
 	valid_wall_angle = true if (collision_angle > 89.0 and collision_angle < 91.0) else false
+	wall_sliding = true if (valid_wall_angle and is_on_wall() and get_wall_normal() == input_axis * Vector2.LEFT) else false
 
 
 func process_states():
@@ -111,7 +115,7 @@ func process_player_movement(delta):
 		velocity.y += _gravity * delta
 		if falling and velocity.y >= MAX_FALL_SPEED:
 			velocity.y = MAX_FALL_SPEED
-		if falling and is_on_wall() and velocity.y >= MAX_WALL_SLIDE_SPEED and valid_wall_angle:
+		if falling and wall_sliding and velocity.y >= MAX_WALL_SLIDE_SPEED:
 			velocity.y = MAX_WALL_SLIDE_SPEED
 	elif get_real_velocity().y >= 0:
 		var _gravity = get_gravity()
@@ -125,7 +129,7 @@ func process_player_movement(delta):
 				velocity += collision_normal.normalized() * JUMP_FORCE
 			else :
 				velocity.y = -JUMP_FORCE + min(get_real_velocity().y * 0.8,0)
-		elif is_on_wall() and valid_wall_angle:
+		elif wall_sliding:
 			falling = false
 			var wall_normal = get_wall_normal()
 			velocity.x = wall_normal.x * WALL_JUMP_FORCE
@@ -185,3 +189,10 @@ func process_sprite():
 func process_previous():
 	prev_real_velocity = get_real_velocity()
 	was_on_floor = is_on_floor()
+
+
+func _on_soft_collision_check_body_entered(_body):
+	in_soft_area = true
+
+func _on_soft_collision_check_body_exited(_body):
+	in_soft_area = false

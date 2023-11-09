@@ -1,0 +1,1 @@
+No more auto wall slide, instead hold input towards wall to slide on wall
