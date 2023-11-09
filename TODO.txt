@@ -1,1 +1,13 @@
-No more auto wall slide, instead hold input towards wall to slide on wall
+	Enemies:
+		mines
+		rocket
+		followers
+		drones
+		sliders
+
+	Interactables:
+		Gate + gate key
+		Door + door key
+		one way floor
+		multiplier
+		bounce pad

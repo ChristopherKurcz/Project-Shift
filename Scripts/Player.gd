@@ -86,8 +86,10 @@ func process_states():
 	match body_state:
 		body_states.SOLID:
 			set_collision_mask_value(2,true)
+			FloorRaycast.set_collision_mask_value(2,true)
 		body_states.PHASE:
 			set_collision_mask_value(2,false)
+			FloorRaycast.set_collision_mask_value(2,false)
 
 
 func process_player_movement(delta):
@@ -129,7 +131,7 @@ func process_player_movement(delta):
 				velocity += collision_normal.normalized() * JUMP_FORCE
 			else :
 				velocity.y = -JUMP_FORCE + min(get_real_velocity().y * 0.8,0)
-		elif wall_sliding:
+		elif is_on_wall():
 			falling = false
 			var wall_normal = get_wall_normal()
 			velocity.x = wall_normal.x * WALL_JUMP_FORCE
@@ -172,11 +174,11 @@ func process_sprite():
 	
 	# frame
 	var real_velocity = get_real_velocity()
-	if not on_floor and not is_on_wall() and real_velocity.y < -5:
+	if not on_floor and not wall_sliding and real_velocity.y < -5:
 		Sprite.frame = 1
-	elif not on_floor and not is_on_wall() and real_velocity.y > 5:
+	elif not on_floor and not wall_sliding and real_velocity.y > 5:
 		Sprite.frame = 2
-	elif is_on_wall():
+	elif wall_sliding:
 		Sprite.frame = 0
 	else:
 		Sprite.frame = 0

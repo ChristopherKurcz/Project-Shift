@@ -12,6 +12,8 @@ func _ready():
 
 
 func _physics_process(delta):
+	if time_left <= 0:
+		timeout()
 	if active:
 		match Player.body_state:
 			Player.body_states.SOLID:
@@ -28,4 +30,5 @@ func remove_time(amount):
 
 
 func timeout():
+	active = false
 	Player.die()
