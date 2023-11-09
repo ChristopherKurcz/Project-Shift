@@ -29,7 +29,7 @@ var was_on_floor
 var valid_wall_angle
 var in_soft_area = false
 # times
-var coyote_time = 0.1
+var coyote_time = 0.05
 var jump_timer = 0.0
 # nodes
 @onready var Sprite = $Sprite2D
@@ -153,22 +153,24 @@ func get_gravity():
 
 
 func process_timers(delta):
+	if not falling:
+		jump_timer += coyote_time
+	
 	if is_on_floor():
 		jump_timer = 0.0
 	else:
 		jump_timer += delta
-	
-	if not falling:
-		jump_timer += coyote_time
 
 
 func process_sprite():
+	# color
 	match body_state:
 		body_states.PHASE:
 			Sprite.self_modulate = Color("539987")
 		body_states.SOLID:
 			Sprite.self_modulate = Color("f1e3d3")
 	
+	# frame
 	var real_velocity = get_real_velocity()
 	if not on_floor and not is_on_wall() and real_velocity.y < -5:
 		Sprite.frame = 1
@@ -179,16 +181,20 @@ func process_sprite():
 	else:
 		Sprite.frame = 0
 	
+	# flip
 	if real_velocity.x < -5:
 		Sprite.flip_h = true
 	if real_velocity.x > 5:
 		Sprite.flip_h = false
-	
 
 
 func process_previous():
 	prev_real_velocity = get_real_velocity()
 	was_on_floor = is_on_floor()
+
+
+func die():
+	body_state = body_states.DEAD
 
 
 func _on_soft_collision_check_body_entered(_body):

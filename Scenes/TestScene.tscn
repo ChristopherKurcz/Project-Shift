@@ -1,110 +1,136 @@
-[gd_scene load_steps=4 format=3 uid="uid://beod68dnv3e04"]
+[gd_scene load_steps=6 format=3 uid="uid://beod68dnv3e04"]
 
 [ext_resource type="Script" path="res://Scripts/TestScene.gd" id="1_ul0lc"]
 [ext_resource type="PackedScene" uid="uid://dotlycttflva3" path="res://Scenes/Player.tscn" id="2_anbxc"]
+[ext_resource type="PackedScene" uid="uid://c0pwni5tyabf4" path="res://Scenes/TimeManager.tscn" id="3_h4qkr"]
 [ext_resource type="PackedScene" uid="uid://qiladjg8enpb" path="res://Scenes/EnergyPickup.tscn" id="3_hjunl"]
+[ext_resource type="PackedScene" uid="uid://dl1fffmsytcuo" path="res://Scenes/GUI.tscn" id="5_3mc4j"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_ul0lc")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="BackgroundColor" type="ColorRect" parent="."]
 offset_right = 320.0
 offset_bottom = 184.0
 color = Color(0.435294, 0.52549, 0.584314, 1)
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+[node name="StaticBodies" type="Node2D" parent="."]
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="StaticBodies"]
 visible = false
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D2"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBodies/StaticBody2D2"]
 polygon = PackedVector2Array(8, 104, 16, 104, 16, 168, 88, 168, 128, 128, 160, 128, 160, 152, 176, 152, 208, 168, 224, 168, 240, 136, 264, 136, 296, 104, 296, 80, 312, 80, 312, 176, 8, 176)
 disabled = true
 one_way_collision_margin = 2.0
 
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D2/CollisionPolygon2D"]
+[node name="Polygon2D" type="Polygon2D" parent="StaticBodies/StaticBody2D2/CollisionPolygon2D"]
 
-[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+[node name="StaticBody2D3" type="StaticBody2D" parent="StaticBodies"]
 visible = false
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D3"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBodies/StaticBody2D3"]
 polygon = PackedVector2Array(112, 128, 152, 168, 160, 168, 168, 168, 312, 24, 312, 176, 8, 176, 8, 128)
 disabled = true
 
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D3/CollisionPolygon2D"]
+[node name="Polygon2D" type="Polygon2D" parent="StaticBodies/StaticBody2D3/CollisionPolygon2D"]
 
-[node name="StaticBody2D5" type="StaticBody2D" parent="."]
+[node name="StaticBody2D5" type="StaticBody2D" parent="StaticBodies"]
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D5"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBodies/StaticBody2D5"]
 polygon = PackedVector2Array(24, 72, 16, 80, 16, 112, 24, 120, 64, 120, 64, 128, 64, 160, 72, 168, 104, 168, 112, 160, 112, 128, 112, 120, 208, 120, 208, 128, 208, 160, 216, 168, 248, 168, 256, 160, 256, 128, 256, 120, 296, 120, 304, 112, 304, 80, 296, 72, 256, 72, 256, 64, 256, 32, 248, 24, 216, 24, 208, 32, 208, 64, 208, 72, 112, 72, 112, 64, 112, 32, 104, 24, 72, 24, 64, 32, 64, 64, 64, 72, 24, 72, 0, 0, 320, 0, 320, 184, 0, 184, 0, 0)
 
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D5/CollisionPolygon2D"]
+[node name="Polygon2D" type="Polygon2D" parent="StaticBodies/StaticBody2D5/CollisionPolygon2D"]
 
-[node name="StaticBody2D6" type="StaticBody2D" parent="."]
+[node name="StaticBody2D6" type="StaticBody2D" parent="StaticBodies"]
 collision_layer = 2
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D6"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBodies/StaticBody2D6"]
 polygon = PackedVector2Array(144, 72, 152, 80, 152, 112, 144, 120, 176, 120, 168, 112, 168, 80, 176, 72)
 
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D6/CollisionPolygon2D"]
+[node name="Polygon2D" type="Polygon2D" parent="StaticBodies/StaticBody2D6/CollisionPolygon2D"]
 
-[node name="BorderWalls" type="StaticBody2D" parent="."]
+[node name="BorderWalls" type="StaticBody2D" parent="StaticBodies"]
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BorderWalls"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBodies/BorderWalls"]
 polygon = PackedVector2Array(0, 0, 0, 184, 320, 184, 320, 0, 0, 0, 8, 16, 312, 16, 312, 168, 8, 168, 8, 16)
 
-[node name="Polygon2D" type="Polygon2D" parent="BorderWalls/CollisionPolygon2D"]
+[node name="Polygon2D" type="Polygon2D" parent="StaticBodies/BorderWalls/CollisionPolygon2D"]
+
+[node name="EnergyPickups" type="Node2D" parent="."]
+
+[node name="Node2D" parent="EnergyPickups" node_paths=PackedStringArray("TimeManger") instance=ExtResource("3_hjunl")]
+position = Vector2(122, 98)
+TimeManger = NodePath("../../TimeManager")
+
+[node name="Node2D2" parent="EnergyPickups" node_paths=PackedStringArray("TimeManger") instance=ExtResource("3_hjunl")]
+position = Vector2(126, 98)
+TimeManger = NodePath("../../TimeManager")
+
+[node name="Node2D3" parent="EnergyPickups" node_paths=PackedStringArray("TimeManger") instance=ExtResource("3_hjunl")]
+position = Vector2(122, 102)
+TimeManger = NodePath("../../TimeManager")
+
+[node name="Node2D4" parent="EnergyPickups" node_paths=PackedStringArray("TimeManger") instance=ExtResource("3_hjunl")]
+position = Vector2(126, 102)
+TimeManger = NodePath("../../TimeManager")
+
+[node name="Node2D5" parent="EnergyPickups" node_paths=PackedStringArray("TimeManger") instance=ExtResource("3_hjunl")]
+position = Vector2(122, 90)
+TimeManger = NodePath("../../TimeManager")
+
+[node name="Node2D6" parent="EnergyPickups" node_paths=PackedStringArray("TimeManger") instance=ExtResource("3_hjunl")]
+position = Vector2(126, 90)
+TimeManger = NodePath("../../TimeManager")
+
+[node name="Node2D7" parent="EnergyPickups" node_paths=PackedStringArray("TimeManger") instance=ExtResource("3_hjunl")]
+position = Vector2(122, 94)
+TimeManger = NodePath("../../TimeManager")
+
+[node name="Node2D8" parent="EnergyPickups" node_paths=PackedStringArray("TimeManger") instance=ExtResource("3_hjunl")]
+position = Vector2(126, 94)
+TimeManger = NodePath("../../TimeManager")
+
+[node name="Node2D9" parent="EnergyPickups" node_paths=PackedStringArray("TimeManger") instance=ExtResource("3_hjunl")]
+position = Vector2(130, 98)
+TimeManger = NodePath("../../TimeManager")
+
+[node name="Node2D10" parent="EnergyPickups" node_paths=PackedStringArray("TimeManger") instance=ExtResource("3_hjunl")]
+position = Vector2(134, 98)
+TimeManger = NodePath("../../TimeManager")
+
+[node name="Node2D11" parent="EnergyPickups" node_paths=PackedStringArray("TimeManger") instance=ExtResource("3_hjunl")]
+position = Vector2(130, 102)
+TimeManger = NodePath("../../TimeManager")
+
+[node name="Node2D12" parent="EnergyPickups" node_paths=PackedStringArray("TimeManger") instance=ExtResource("3_hjunl")]
+position = Vector2(134, 102)
+TimeManger = NodePath("../../TimeManager")
+
+[node name="Node2D13" parent="EnergyPickups" node_paths=PackedStringArray("TimeManger") instance=ExtResource("3_hjunl")]
+position = Vector2(130, 90)
+TimeManger = NodePath("../../TimeManager")
+
+[node name="Node2D14" parent="EnergyPickups" node_paths=PackedStringArray("TimeManger") instance=ExtResource("3_hjunl")]
+position = Vector2(134, 90)
+TimeManger = NodePath("../../TimeManager")
+
+[node name="Node2D15" parent="EnergyPickups" node_paths=PackedStringArray("TimeManger") instance=ExtResource("3_hjunl")]
+position = Vector2(130, 94)
+TimeManger = NodePath("../../TimeManager")
+
+[node name="Node2D16" parent="EnergyPickups" node_paths=PackedStringArray("TimeManger") instance=ExtResource("3_hjunl")]
+position = Vector2(134, 94)
+TimeManger = NodePath("../../TimeManager")
+
+[node name="TimeManager" parent="." node_paths=PackedStringArray("Player") instance=ExtResource("3_h4qkr")]
+Player = NodePath("../CharacterBody2D")
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_anbxc")]
 position = Vector2(40, 112)
 
-[node name="EnergyPickups" type="Node2D" parent="."]
-
-[node name="Node2D" parent="EnergyPickups" instance=ExtResource("3_hjunl")]
-position = Vector2(122, 98)
-
-[node name="Node2D2" parent="EnergyPickups" instance=ExtResource("3_hjunl")]
-position = Vector2(126, 98)
-
-[node name="Node2D3" parent="EnergyPickups" instance=ExtResource("3_hjunl")]
-position = Vector2(122, 102)
-
-[node name="Node2D4" parent="EnergyPickups" instance=ExtResource("3_hjunl")]
-position = Vector2(126, 102)
-
-[node name="Node2D5" parent="EnergyPickups" instance=ExtResource("3_hjunl")]
-position = Vector2(122, 90)
-
-[node name="Node2D6" parent="EnergyPickups" instance=ExtResource("3_hjunl")]
-position = Vector2(126, 90)
-
-[node name="Node2D7" parent="EnergyPickups" instance=ExtResource("3_hjunl")]
-position = Vector2(122, 94)
-
-[node name="Node2D8" parent="EnergyPickups" instance=ExtResource("3_hjunl")]
-position = Vector2(126, 94)
-
-[node name="Node2D9" parent="EnergyPickups" instance=ExtResource("3_hjunl")]
-position = Vector2(130, 98)
-
-[node name="Node2D10" parent="EnergyPickups" instance=ExtResource("3_hjunl")]
-position = Vector2(134, 98)
-
-[node name="Node2D11" parent="EnergyPickups" instance=ExtResource("3_hjunl")]
-position = Vector2(130, 102)
-
-[node name="Node2D12" parent="EnergyPickups" instance=ExtResource("3_hjunl")]
-position = Vector2(134, 102)
-
-[node name="Node2D13" parent="EnergyPickups" instance=ExtResource("3_hjunl")]
-position = Vector2(130, 90)
-
-[node name="Node2D14" parent="EnergyPickups" instance=ExtResource("3_hjunl")]
-position = Vector2(134, 90)
-
-[node name="Node2D15" parent="EnergyPickups" instance=ExtResource("3_hjunl")]
-position = Vector2(130, 94)
-
-[node name="Node2D16" parent="EnergyPickups" instance=ExtResource("3_hjunl")]
-position = Vector2(134, 94)
+[node name="GUI" parent="." node_paths=PackedStringArray("TimeManager") instance=ExtResource("5_3mc4j")]
+TimeManager = NodePath("../TimeManager")

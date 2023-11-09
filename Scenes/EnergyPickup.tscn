@@ -1,16 +1,65 @@
-[gd_scene load_steps=3 format=3 uid="uid://qiladjg8enpb"]
+[gd_scene load_steps=7 format=3 uid="uid://qiladjg8enpb"]
 
+[ext_resource type="Script" path="res://Scripts/EnergyPickup.gd" id="1_l1lnp"]
 [ext_resource type="Texture2D" uid="uid://ccbg85jtvtpc7" path="res://Assets/EnergyPickup.png" id="1_vtie4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_voqgc"]
 size = Vector2(3, 3)
 
+[sub_resource type="Animation" id="Animation_ujoie"]
+resource_name = "collected"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(2.08165e-12, -1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.125, 0.125), Vector2(2.08165e-12, 0.125)]
+}
+
+[sub_resource type="Animation" id="Animation_f56wx"]
+length = 0.001
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_07ogw"]
+_data = {
+"RESET": SubResource("Animation_f56wx"),
+"collected": SubResource("Animation_ujoie")
+}
+
 [node name="Node2D" type="Area2D"]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_l1lnp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_voqgc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.32549, 0.6, 0.529412, 1)
 scale = Vector2(0.125, 0.125)
 texture = ExtResource("1_vtie4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_voqgc")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_07ogw")
+}
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
